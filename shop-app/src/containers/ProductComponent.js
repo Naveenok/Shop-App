@@ -1,14 +1,12 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { setProducts } from "../redux/actions/productActions";
+import React from "react";
+import { useSelector } from "react-redux";
 
 const ProductComponent = () => {
   const products = useSelector((state) => state.allProducts.products);
   const rederList = products.map((product) => {
     const { id, title, image, price, category } = product;
     return (
-      <div className="four column wide">
+      <div className="four wide column">
         <div className="ui link cards">
           <div className="card">
             <div className="image">
@@ -24,21 +22,6 @@ const ProductComponent = () => {
       </div>
     );
   });
-  const dispatch = useDispatch();
-
-  const fetchProducts = async () => {
-    const response = await axios({
-      method: "GET",
-      url: "https://fakestoreapi.com/products",
-    }).catch((err) => {
-      console.log(err);
-    });
-    dispatch(setProducts(response.data));
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
 
   return <>{rederList}</>;
 };
